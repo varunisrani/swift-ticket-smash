@@ -1,5 +1,16 @@
 # Product Roadmap
 
+## Phase 0: Already Completed
+
+The following features have been implemented:
+
+- [x] **Ticket submission form with category selection** - Full form with validation and Supabase integration
+- [x] **Dashboard with ticket list and filtering** - Complete dashboard with search and filter capabilities
+- [x] **Individual ticket detail view** - Detailed ticket pages with comments and status updates
+- [x] **Basic status management** (New, In Progress, Closed) - Status workflow implemented
+- [x] **Priority levels** (Low, Medium, High, Urgent) - Priority system with visual indicators
+- [x] **Role-based dashboard system** - Complete admin, manager, and customer dashboards with authentication
+
 ## Phase 1: Core MVP
 
 **Goal:** Launch functional ticket management system with essential features
@@ -7,17 +18,12 @@
 
 ### Features
 
-- [x] Ticket submission form with category selection - `S`
-- [x] Dashboard with ticket list and filtering - `M`
-- [x] Individual ticket detail view - `S`
-- [x] Basic status management (New, In Progress, Closed) - `S`
-- [x] Priority levels (Low, Medium, High, Urgent) - `XS`
 - [ ] Email notifications for ticket updates - `M`
-- [ ] Basic user authentication and roles - `L`
+- [ ] Enhanced user authentication and session management - `M`
 
 ### Dependencies
 
-- Supabase project setup and configuration
+- Supabase project setup and configuration ✓
 - Email service integration (SendGrid/Resend)
 - Domain and hosting setup
 
