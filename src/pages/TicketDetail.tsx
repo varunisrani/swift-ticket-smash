@@ -65,47 +65,35 @@ const TicketDetail = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background p-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center py-8">
-            <p className="text-muted-foreground">Loading ticket...</p>
-          </div>
-        </div>
+      <div className="text-center py-8">
+        <p className="text-muted-foreground">Loading ticket...</p>
       </div>
     );
   }
 
   if (!ticket) {
     return (
-      <div className="min-h-screen bg-background p-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center py-8">
-            <p className="text-muted-foreground">Ticket not found</p>
-            <Button asChild className="mt-4">
-              <Link to="/">
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Back to Dashboard
-              </Link>
-            </Button>
-          </div>
-        </div>
+      <div className="text-center py-8">
+        <p className="text-muted-foreground">Ticket not found</p>
+        <Button asChild className="mt-4">
+          <Link to="/">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Dashboard
+          </Link>
+        </Button>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background p-4">
-      <div className="max-w-4xl mx-auto space-y-6">
-        {/* Header */}
-        <div className="flex items-center gap-4">
-          <Button variant="ghost" onClick={() => navigate('/')}>
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Dashboard
-          </Button>
-          <Badge variant="outline" className="font-mono">
-            #{ticket.id.slice(-6)}
-          </Badge>
-        </div>
+    <div className="max-w-4xl mx-auto space-y-6">
+      {/* Back Button */}
+      <div className="flex items-center gap-4">
+        <Button variant="ghost" onClick={() => navigate('/')}>
+          <ArrowLeft className="h-4 w-4 mr-2" />
+          Back to Dashboard
+        </Button>
+      </div>
 
         {/* Ticket Info */}
         <Card>
@@ -219,8 +207,7 @@ const TicketDetail = () => {
         <StatusUpdate ticket={ticket} />
 
         {/* Comments */}
-        <CommentsSection ticketId={ticket.id} />
-      </div>
+      <CommentsSection ticketId={ticket.id} />
     </div>
   );
 };

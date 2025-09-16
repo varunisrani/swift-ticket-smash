@@ -11,8 +11,9 @@ import { StatusBadge } from '@/components/StatusBadge';
 import { PriorityBadge } from '@/components/PriorityBadge';
 import { QuickStats } from '@/components/QuickStats';
 import { ChatWidget } from '@/components/ChatWidget';
+import { RoleDemo } from '@/components/RoleDemo';
 import { format } from 'date-fns';
-import { Plus, Search, Eye } from 'lucide-react';
+import { Search, Eye } from 'lucide-react';
 
 const Index = () => {
   const { tickets, loading, fetchTickets } = useTickets();
@@ -32,31 +33,16 @@ const Index = () => {
   );
 
   return (
-    <div className="min-h-screen bg-background p-4">
-      <div className="max-w-7xl mx-auto space-y-6">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <div>
-            <h1 className="text-3xl font-bold">Facility Management System</h1>
-            <p className="text-muted-foreground mt-1">Track and manage all facility tickets</p>
-          </div>
-          <Button asChild>
-            <Link to="/submit">
-              <Plus className="h-4 w-4 mr-2" />
-              Submit Ticket
-            </Link>
-          </Button>
-        </div>
+    <div className="space-y-6">
+      {/* Quick Stats */}
+      <QuickStats tickets={tickets} />
 
-        {/* Quick Stats */}
-        <QuickStats tickets={tickets} />
-
-        {/* Controls */}
-        <Card>
-          <CardHeader>
-            <CardTitle>All Tickets</CardTitle>
-          </CardHeader>
-          <CardContent>
+      {/* Controls */}
+      <Card>
+        <CardHeader>
+          <CardTitle>All Tickets</CardTitle>
+        </CardHeader>
+        <CardContent>
             <div className="flex flex-col sm:flex-row gap-4 mb-6">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -167,9 +153,11 @@ const Index = () => {
           </CardContent>
         </Card>
 
-        {/* Chat Widget */}
-        <ChatWidget />
-      </div>
+      {/* Role Demo */}
+      <RoleDemo />
+
+      {/* Chat Widget */}
+      <ChatWidget />
     </div>
   );
 };

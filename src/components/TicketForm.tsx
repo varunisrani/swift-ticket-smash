@@ -39,16 +39,8 @@ export const TicketForm = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background p-4">
-      <div className="max-w-2xl mx-auto">
-        <Card>
-          <CardHeader>
-            <CardTitle>Submit New Ticket</CardTitle>
-            <CardDescription>
-              Report an issue or request assistance from our support team
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
+    <Card>
+      <CardContent className="pt-6">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
                 <Label htmlFor="title">Issue Title *</Label>
@@ -127,9 +119,7 @@ export const TicketForm = () => {
                 </Button>
               </div>
             </form>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 };
