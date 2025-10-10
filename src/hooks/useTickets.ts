@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
 
 export interface Ticket {
   id: string;
@@ -31,6 +32,7 @@ const ROUTING_RULES = {
 };
 
 export const useTickets = () => {
+  const { user } = useAuth();
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -38,6 +40,11 @@ export const useTickets = () => {
     setLoading(true);
     try {
       let query = supabase.from('tickets').select('*');
+      
+      // Apply category filtering based on user role
+      if (user && user.category !== 'admin') {
+        query = query.eq('category', user.category);
+      }
       
       if (sortBy === 'priority') {
         query = query.order('priority', { ascending: false });
