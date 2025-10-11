@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import Sidebar from './Sidebar';
+import { NotificationPanel } from './NotificationPanel';
 import { User, Menu, LogOut } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { getCategoryDisplayName } from '@/services/authService';
@@ -26,14 +27,36 @@ const PortalLayout = ({ children, title, subtitle }: PortalLayoutProps) => {
     switch (category) {
       case 'electrical':
         return 'text-yellow-600 bg-yellow-50';
+      case 'civil':
+        return 'text-orange-600 bg-orange-50';
+      case 'it':
+        return 'text-purple-600 bg-purple-50';
+      case 'it_service':
+        return 'text-purple-700 bg-purple-100';
+      case 'maintenance':
+        return 'text-amber-600 bg-amber-50';
+      case 'housekeeping':
+        return 'text-pink-600 bg-pink-50';
+      case 'front_office':
+        return 'text-cyan-600 bg-cyan-50';
       case 'security':
         return 'text-green-600 bg-green-50';
-      case 'it_service':
-        return 'text-purple-600 bg-purple-50';
-      case 'admin':
-        return 'text-red-600 bg-red-50';
-      default:
+      case 'drivers':
+        return 'text-slate-600 bg-slate-50';
+      case 'general_ward':
         return 'text-blue-600 bg-blue-50';
+      case 'icu':
+        return 'text-red-600 bg-red-50';
+      case 'ot':
+        return 'text-violet-600 bg-violet-50';
+      case 'nursing':
+        return 'text-indigo-600 bg-indigo-50';
+      case 'billing':
+        return 'text-emerald-600 bg-emerald-50';
+      case 'admin':
+        return 'text-red-700 bg-red-100';
+      default:
+        return 'text-gray-600 bg-gray-50';
     }
   };
 
@@ -68,7 +91,8 @@ const PortalLayout = ({ children, title, subtitle }: PortalLayoutProps) => {
                   )}
                 </div>
               </div>
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2">
+                <NotificationPanel />
                 <div className="flex items-center space-x-2">
                   <User className="h-4 w-4 text-gray-500" />
                   <span className="text-sm font-medium text-gray-700">{user?.name}</span>

@@ -5,25 +5,50 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import Layout from '@/components/Layout';
 import { useTickets } from '@/hooks/useTickets';
 import { StatusBadge } from '@/components/StatusBadge';
 import { PriorityBadge } from '@/components/PriorityBadge';
 import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
-import { Search, Ticket, Filter, Eye } from 'lucide-react';
+import { Search, Ticket, Filter, Eye, Trash2 } from 'lucide-react';
 
 const AllTickets = () => {
-  const { tickets, loading, fetchTickets } = useTickets();
+  const { tickets, loading, fetchTickets, deleteTicket } = useTickets();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [priorityFilter, setPriorityFilter] = useState('all');
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [sortBy, setSortBy] = useState('created_at');
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [ticketToDelete, setTicketToDelete] = useState<string | null>(null);
 
   const handleSortChange = (value: string) => {
     setSortBy(value);
     fetchTickets(value);
+  };
+
+  const handleDeleteClick = (ticketId: string) => {
+    setTicketToDelete(ticketId);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (ticketToDelete) {
+      await deleteTicket(ticketToDelete);
+      setDeleteDialogOpen(false);
+      setTicketToDelete(null);
+    }
   };
 
   const filteredTickets = tickets.filter(ticket => {
@@ -88,16 +113,24 @@ const AllTickets = () => {
                     
                     <Select value={categoryFilter} onValueChange={setCategoryFilter}>
                       <SelectTrigger className="w-full sm:w-40">
-                        <SelectValue placeholder="Category" />
+                        <SelectValue placeholder="Department" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="all">All Categories</SelectItem>
-                        <SelectItem value="Electrical">Electrical</SelectItem>
-                        <SelectItem value="Plumbing">Plumbing</SelectItem>
-                        <SelectItem value="HVAC">HVAC</SelectItem>
-                        <SelectItem value="Cleaning">Cleaning</SelectItem>
-                        <SelectItem value="Security">Security</SelectItem>
-                        <SelectItem value="Other">Other</SelectItem>
+                        <SelectItem value="all">All Departments</SelectItem>
+                        <SelectItem value="electrical">Electrical</SelectItem>
+                        <SelectItem value="civil">Civil</SelectItem>
+                        <SelectItem value="it">IT</SelectItem>
+                        <SelectItem value="it_service">IT Service</SelectItem>
+                        <SelectItem value="maintenance">Maintenance</SelectItem>
+                        <SelectItem value="housekeeping">Housekeeping</SelectItem>
+                        <SelectItem value="front_office">Front Office</SelectItem>
+                        <SelectItem value="security">Security</SelectItem>
+                        <SelectItem value="drivers">Drivers</SelectItem>
+                        <SelectItem value="general_ward">General Ward</SelectItem>
+                        <SelectItem value="icu">ICU</SelectItem>
+                        <SelectItem value="ot">OT</SelectItem>
+                        <SelectItem value="nursing">Nursing</SelectItem>
+                        <SelectItem value="billing">Billing</SelectItem>
                       </SelectContent>
                     </Select>
                     
@@ -151,81 +184,91 @@ const AllTickets = () => {
                       <Table>
                         <TableHeader className="bg-gray-50">
                           <TableRow>
-                            <TableHead className="font-semibold text-gray-900 whitespace-nowrap">ID</TableHead>
-                            <TableHead className="font-semibold text-gray-900 whitespace-nowrap">Title</TableHead>
-                            <TableHead className="font-semibold text-gray-900 whitespace-nowrap">Category</TableHead>
-                            <TableHead className="font-semibold text-gray-900 whitespace-nowrap">Status</TableHead>
-                            <TableHead className="font-semibold text-gray-900 whitespace-nowrap">Priority</TableHead>
-                            <TableHead className="font-semibold text-gray-900 whitespace-nowrap">Submitted By</TableHead>
-                            <TableHead className="font-semibold text-gray-900 whitespace-nowrap">Assigned To</TableHead>
-                            <TableHead className="font-semibold text-gray-900 whitespace-nowrap">Due Date</TableHead>
-                            <TableHead className="font-semibold text-gray-900 whitespace-nowrap">Created</TableHead>
-                            <TableHead className="font-semibold text-gray-900 whitespace-nowrap">Actions</TableHead>
+                            <TableHead className="font-semibold text-gray-900 w-[80px]">ID</TableHead>
+                            <TableHead className="font-semibold text-gray-900 min-w-[200px]">Title</TableHead>
+                            <TableHead className="font-semibold text-gray-900 w-[100px]">Department</TableHead>
+                            <TableHead className="font-semibold text-gray-900 w-[110px]">Status</TableHead>
+                            <TableHead className="font-semibold text-gray-900 w-[90px]">Priority</TableHead>
+                            <TableHead className="font-semibold text-gray-900 w-[140px] hidden md:table-cell">Submitted By</TableHead>
+                            <TableHead className="font-semibold text-gray-900 w-[120px] hidden lg:table-cell">Assigned To</TableHead>
+                            <TableHead className="font-semibold text-gray-900 w-[100px] hidden xl:table-cell">Due Date</TableHead>
+                            <TableHead className="font-semibold text-gray-900 w-[100px] hidden xl:table-cell">Created</TableHead>
+                            <TableHead className="font-semibold text-gray-900 w-[100px]">Actions</TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody>
                           {filteredTickets.map((ticket) => (
                             <TableRow key={ticket.id} className="border-gray-200 hover:bg-gray-50">
-                              <TableCell className="font-medium whitespace-nowrap">
+                              <TableCell className="font-medium">
                                 <Badge variant="outline" className="font-mono text-xs">
                                   #{ticket.id.slice(-6)}
                                 </Badge>
                               </TableCell>
-                              <TableCell className="max-w-xs">
-                                <div className="truncate font-medium text-gray-900" title={ticket.title}>
+                              <TableCell>
+                                <div className="truncate font-medium text-gray-900 max-w-[200px]" title={ticket.title}>
                                   {ticket.title}
                                 </div>
                                 {ticket.description && (
-                                  <div className="text-xs text-gray-500 truncate mt-1" title={ticket.description}>
+                                  <div className="text-xs text-gray-500 truncate mt-1 max-w-[200px]" title={ticket.description}>
                                     {ticket.description}
                                   </div>
                                 )}
                               </TableCell>
-                              <TableCell className="whitespace-nowrap">
+                              <TableCell>
                                 <Badge variant="secondary" className="text-xs">
                                   {ticket.category}
                                 </Badge>
                               </TableCell>
-                              <TableCell className="whitespace-nowrap">
+                              <TableCell>
                                 <StatusBadge status={ticket.status} />
                               </TableCell>
-                              <TableCell className="whitespace-nowrap">
+                              <TableCell>
                                 <PriorityBadge priority={ticket.priority} />
                               </TableCell>
-                              <TableCell className="max-w-xs">
-                                <div className="text-sm text-gray-900 truncate" title={ticket.submitter_email}>
+                              <TableCell className="hidden md:table-cell">
+                                <div className="text-sm text-gray-900 truncate max-w-[140px]" title={ticket.submitter_email}>
                                   {ticket.submitter_email}
                                 </div>
                               </TableCell>
-                              <TableCell className="max-w-xs">
-                                <div className="text-sm text-gray-600 truncate" title={ticket.assigned_to || 'Unassigned'}>
+                              <TableCell className="hidden lg:table-cell">
+                                <div className="text-sm text-gray-600 truncate max-w-[120px]" title={ticket.assigned_to || 'Unassigned'}>
                                   {ticket.assigned_to || 'Unassigned'}
                                 </div>
                               </TableCell>
-                              <TableCell className="whitespace-nowrap">
+                              <TableCell className="hidden xl:table-cell">
                                 {ticket.expected_date ? (
-                                  <span className={`text-sm ${
+                                  <span className={`text-xs ${
                                     new Date(ticket.expected_date) < new Date() && ticket.status !== 'Closed'
                                       ? 'text-red-600 font-medium'
                                       : 'text-gray-600'
                                   }`}>
-                                    {format(new Date(ticket.expected_date), 'MMM d, yyyy')}
+                                    {format(new Date(ticket.expected_date), 'MMM d')}
                                   </span>
                                 ) : (
-                                  <span className="text-gray-400 text-sm">Not set</span>
+                                  <span className="text-gray-400 text-xs">-</span>
                                 )}
                               </TableCell>
-                              <TableCell className="whitespace-nowrap">
-                                <span className="text-sm text-gray-600">
-                                  {format(new Date(ticket.created_at), 'MMM d, yyyy')}
+                              <TableCell className="hidden xl:table-cell">
+                                <span className="text-xs text-gray-600">
+                                  {format(new Date(ticket.created_at), 'MMM d')}
                                 </span>
                               </TableCell>
-                              <TableCell className="whitespace-nowrap">
-                                <Button variant="ghost" size="sm" asChild>
-                                  <Link to={`/ticket/${ticket.id}`}>
-                                    <Eye className="h-4 w-4" />
-                                  </Link>
-                                </Button>
+                              <TableCell>
+                                <div className="flex items-center gap-1">
+                                  <Button variant="ghost" size="sm" asChild className="h-8 w-8 p-0">
+                                    <Link to={`/ticket/${ticket.id}`}>
+                                      <Eye className="h-4 w-4" />
+                                    </Link>
+                                  </Button>
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => handleDeleteClick(ticket.id)}
+                                    className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
+                                  >
+                                    <Trash2 className="h-4 w-4" />
+                                  </Button>
+                                </div>
                               </TableCell>
                             </TableRow>
                           ))}
@@ -238,6 +281,28 @@ const AllTickets = () => {
             </Card>
           </div>
         </div>
+
+        {/* Delete Confirmation Dialog */}
+        <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently delete the ticket
+                and all associated data.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={handleDeleteConfirm}
+                className="bg-red-600 hover:bg-red-700"
+              >
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
     </Layout>
   );
 };

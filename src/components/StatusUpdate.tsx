@@ -10,9 +10,9 @@ interface StatusUpdateProps {
 }
 
 const STATUSES = {
-  'Awaiting': { next: ['In Progress'] },
+  'Awaiting': { next: ['In Progress', 'Closed'] },
   'In Progress': { next: ['Closed', 'On Hold', 'Monitoring'] },
-  'On Hold': { next: ['In Progress'], requiresReason: true },
+  'On Hold': { next: ['In Progress', 'Closed'], requiresReason: true },
   'Monitoring': { next: ['Closed', 'In Progress'] },
   'Closed': { next: [], canReopen: 'Manager' },
   'Overdue': { next: ['In Progress', 'Closed'] }

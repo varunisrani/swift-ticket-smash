@@ -26,9 +26,20 @@ export interface TicketComment {
 }
 
 const ROUTING_RULES = {
-  'IT': 'it_department@company.com',
-  'Electrical': 'electrical_dept@company.com',
-  'Infrastructure': 'infra_team@company.com'
+  'electrical': 'electrical',
+  'civil': 'civil',
+  'it': 'it',
+  'it_service': 'it_service',
+  'maintenance': 'maintenance',
+  'housekeeping': 'housekeeping',
+  'front_office': 'front_office',
+  'security': 'security',
+  'drivers': 'drivers',
+  'general_ward': 'general_ward',
+  'icu': 'icu',
+  'ot': 'ot',
+  'nursing': 'nursing',
+  'billing': 'billing'
 };
 
 export const useTickets = () => {
@@ -83,7 +94,7 @@ export const useTickets = () => {
   const createTicket = async (ticketData: Omit<Ticket, 'id' | 'created_at' | 'updated_at' | 'assigned_to' | 'status' | 'expected_date'>) => {
     try {
       const assigned_to = ROUTING_RULES[ticketData.category as keyof typeof ROUTING_RULES] || null;
-      
+
       const { data, error } = await supabase
         .from('tickets')
         .insert([{ ...ticketData, assigned_to, status: 'Awaiting', expected_date: null }])
@@ -91,6 +102,22 @@ export const useTickets = () => {
         .single();
 
       if (error) throw error;
+
+      // Create notification for the assigned department
+      try {
+        await supabase
+          .from('notifications')
+          .insert([{
+            title: 'New Ticket Created',
+            message: `New ${ticketData.priority} priority ticket: ${ticketData.title}`,
+            type: ticketData.priority === 'urgent' || ticketData.priority === 'high' ? 'warning' : 'info',
+            category: ticketData.category,
+            ticket_id: data.id
+          }]);
+      } catch (notifError) {
+        console.error('Error creating notification:', notifError);
+        // Don't fail the ticket creation if notification fails
+      }
 
       toast({
         title: "Success",
@@ -112,12 +139,50 @@ export const useTickets = () => {
 
   const updateTicket = async (id: string, updates: Partial<Ticket>) => {
     try {
+      // Get the original ticket first
+      const { data: originalTicket } = await supabase
+        .from('tickets')
+        .select('*')
+        .eq('id', id)
+        .single();
+
       const { error } = await supabase
         .from('tickets')
         .update(updates)
         .eq('id', id);
 
       if (error) throw error;
+
+      // Create notification if status changed
+      if (updates.status && originalTicket && updates.status !== originalTicket.status) {
+        try {
+          let notificationType: 'info' | 'success' | 'warning' | 'error' = 'info';
+          let message = `Ticket #${id.slice(-6)} status changed to ${updates.status}`;
+
+          if (updates.status === 'Closed') {
+            notificationType = 'success';
+            message = `Ticket #${id.slice(-6)} has been closed`;
+          } else if (updates.status === 'Overdue') {
+            notificationType = 'error';
+            message = `Ticket #${id.slice(-6)} is now overdue!`;
+          } else if (updates.status === 'In Progress') {
+            notificationType = 'info';
+            message = `Ticket #${id.slice(-6)} is now in progress`;
+          }
+
+          await supabase
+            .from('notifications')
+            .insert([{
+              title: 'Ticket Status Updated',
+              message: message,
+              type: notificationType,
+              category: originalTicket.category,
+              ticket_id: id
+            }]);
+        } catch (notifError) {
+          console.error('Error creating notification:', notifError);
+        }
+      }
 
       toast({
         title: "Success",
@@ -128,8 +193,34 @@ export const useTickets = () => {
     } catch (error) {
       console.error('Error updating ticket:', error);
       toast({
-        title: "Error", 
+        title: "Error",
         description: "Failed to update ticket",
+        variant: "destructive",
+      });
+      throw error;
+    }
+  };
+
+  const deleteTicket = async (id: string) => {
+    try {
+      const { error } = await supabase
+        .from('tickets')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Ticket deleted successfully",
+      });
+
+      await fetchTickets();
+    } catch (error) {
+      console.error('Error deleting ticket:', error);
+      toast({
+        title: "Error",
+        description: "Failed to delete ticket",
         variant: "destructive",
       });
       throw error;
@@ -146,6 +237,7 @@ export const useTickets = () => {
     fetchTickets,
     createTicket,
     updateTicket,
+    deleteTicket,
   };
 };
 

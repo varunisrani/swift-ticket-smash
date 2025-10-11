@@ -51,11 +51,22 @@ const TicketDetail = () => {
 
   const handleDateUpdate = async () => {
     if (!ticket || !id) return;
-    
+
     setUpdatingDate(true);
     try {
-      await updateTicket(id, { expected_date: expectedDate || null });
-      setTicket(prev => prev ? { ...prev, expected_date: expectedDate || null } : null);
+      const updates: Partial<Ticket> = { expected_date: expectedDate || null };
+
+      // If setting a date and status is "Awaiting", automatically move to "In Progress"
+      if (expectedDate && ticket.status === 'Awaiting') {
+        updates.status = 'In Progress';
+      }
+
+      await updateTicket(id, updates);
+      setTicket(prev => prev ? {
+        ...prev,
+        expected_date: expectedDate || null,
+        status: updates.status || prev.status
+      } : null);
     } catch (error) {
       console.error('Failed to update date:', error);
     } finally {
@@ -158,7 +169,7 @@ const TicketDetail = () => {
                 <div className="flex items-center gap-3">
                   <Tag className="h-4 w-4 text-muted-foreground" />
                   <div>
-                    <Label className="text-sm font-medium">Category</Label>
+                    <Label className="text-sm font-medium">Department</Label>
                     <p className="text-sm text-muted-foreground">{ticket.category}</p>
                   </div>
                 </div>

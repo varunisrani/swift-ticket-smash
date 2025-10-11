@@ -213,15 +213,26 @@ const DepartmentPortal = () => {
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <Label htmlFor="category">Category</Label>
+                      <Label htmlFor="category">Department</Label>
                       <Select value={formData.category} onValueChange={(value) => handleInputChange('category', value)}>
                         <SelectTrigger className="mt-1">
-                          <SelectValue placeholder="Select category" />
+                          <SelectValue placeholder="Select department" />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="electrical">Electrical</SelectItem>
-                          <SelectItem value="security">Security</SelectItem>
+                          <SelectItem value="civil">Civil</SelectItem>
+                          <SelectItem value="it">IT</SelectItem>
                           <SelectItem value="it_service">IT Service</SelectItem>
+                          <SelectItem value="maintenance">Maintenance</SelectItem>
+                          <SelectItem value="housekeeping">Housekeeping</SelectItem>
+                          <SelectItem value="front_office">Front Office</SelectItem>
+                          <SelectItem value="security">Security</SelectItem>
+                          <SelectItem value="drivers">Drivers</SelectItem>
+                          <SelectItem value="general_ward">General Ward</SelectItem>
+                          <SelectItem value="icu">ICU</SelectItem>
+                          <SelectItem value="ot">OT</SelectItem>
+                          <SelectItem value="nursing">Nursing</SelectItem>
+                          <SelectItem value="billing">Billing</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>

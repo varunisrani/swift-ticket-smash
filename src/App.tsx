@@ -82,13 +82,101 @@ const App = () => (
                 </ProtectedRoute>
               } 
             />
-            <Route 
-              path="/it-service" 
+            <Route
+              path="/it-service"
               element={
                 <ProtectedRoute requiredCategory="it_service">
                   <DepartmentPortal />
                 </ProtectedRoute>
-              } 
+              }
+            />
+            <Route
+              path="/civil"
+              element={
+                <ProtectedRoute requiredCategory="civil">
+                  <DepartmentPortal />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/it"
+              element={
+                <ProtectedRoute requiredCategory="it">
+                  <DepartmentPortal />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/maintenance"
+              element={
+                <ProtectedRoute requiredCategory="maintenance">
+                  <DepartmentPortal />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/housekeeping"
+              element={
+                <ProtectedRoute requiredCategory="housekeeping">
+                  <DepartmentPortal />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/front-office"
+              element={
+                <ProtectedRoute requiredCategory="front_office">
+                  <DepartmentPortal />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/drivers"
+              element={
+                <ProtectedRoute requiredCategory="drivers">
+                  <DepartmentPortal />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/general-ward"
+              element={
+                <ProtectedRoute requiredCategory="general_ward">
+                  <DepartmentPortal />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/icu"
+              element={
+                <ProtectedRoute requiredCategory="icu">
+                  <DepartmentPortal />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/ot"
+              element={
+                <ProtectedRoute requiredCategory="ot">
+                  <DepartmentPortal />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/nursing"
+              element={
+                <ProtectedRoute requiredCategory="nursing">
+                  <DepartmentPortal />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/billing"
+              element={
+                <ProtectedRoute requiredCategory="billing">
+                  <DepartmentPortal />
+                </ProtectedRoute>
+              }
             />
             <Route path="/ticket/:id" element={<TicketDetail />} />
             {/* Default redirect to login */}
