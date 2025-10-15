@@ -127,10 +127,10 @@ const Reports = () => {
 
   return (
     <Layout title="Reports" subtitle="Analytics and insights for complaint management">
-      <div className="p-6">
-        <div className="max-w-7xl mx-auto space-y-6">
+      <div className="p-4 sm:p-6">
+        <div className="max-w-7xl mx-auto space-y-4 sm:space-y-6">
           {/* Header Controls */}
-          <div className="flex justify-end items-center space-x-4 mb-6">
+          <div className="flex flex-col sm:flex-row justify-end items-stretch sm:items-center gap-3 sm:gap-4 sm:space-x-0">
             <div className="flex items-center space-x-2">
               <Calendar className="h-4 w-4 text-gray-500" />
               <Select value={dateRange} onValueChange={setDateRange}>
@@ -152,7 +152,7 @@ const Reports = () => {
           </div>
 
           {/* Summary Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
             <Card className="bg-white border-gray-200">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">

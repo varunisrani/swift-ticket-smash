@@ -120,61 +120,61 @@ const DepartmentPortal = () => {
       title={`${getCategoryDisplayName(user?.category || '')} Portal`} 
       subtitle={`Manage ${getCategoryDisplayName(user?.category || '').toLowerCase()} tickets`}
     >
-      <div className="p-6">
-        <div className="max-w-7xl mx-auto space-y-6">
+      <div className="p-4 sm:p-6">
+        <div className="max-w-7xl mx-auto space-y-4 sm:space-y-6">
           {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
             <Card className="bg-white border-gray-200">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">Total Tickets</p>
-                    <p className="text-2xl font-bold text-gray-900 mt-2">{totalTickets}</p>
+              <CardContent className="p-4 sm:p-6">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
+                  <div className="flex-1">
+                    <p className="text-xs sm:text-sm font-medium text-gray-600">Total Tickets</p>
+                    <p className="text-xl sm:text-2xl font-bold text-gray-900 mt-1 sm:mt-2">{totalTickets}</p>
                   </div>
-                  <div className="h-12 w-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <Ticket className="h-6 w-6 text-blue-600" />
+                  <div className="h-10 w-10 sm:h-12 sm:w-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Ticket className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600" />
                   </div>
                 </div>
               </CardContent>
             </Card>
 
             <Card className="bg-white border-gray-200">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">Open Tickets</p>
-                    <p className="text-2xl font-bold text-gray-900 mt-2">{openTickets}</p>
+              <CardContent className="p-4 sm:p-6">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
+                  <div className="flex-1">
+                    <p className="text-xs sm:text-sm font-medium text-gray-600">Open Tickets</p>
+                    <p className="text-xl sm:text-2xl font-bold text-gray-900 mt-1 sm:mt-2">{openTickets}</p>
                   </div>
-                  <div className="h-12 w-12 bg-yellow-100 rounded-lg flex items-center justify-center">
-                    <Clock className="h-6 w-6 text-yellow-600" />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-white border-gray-200">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">Closed</p>
-                    <p className="text-2xl font-bold text-gray-900 mt-2">{closedTickets}</p>
-                  </div>
-                  <div className="h-12 w-12 bg-green-100 rounded-lg flex items-center justify-center">
-                    <AlertCircle className="h-6 w-6 text-green-600" />
+                  <div className="h-10 w-10 sm:h-12 sm:w-12 bg-yellow-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Clock className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-600" />
                   </div>
                 </div>
               </CardContent>
             </Card>
 
             <Card className="bg-white border-gray-200">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">High Priority</p>
-                    <p className="text-2xl font-bold text-gray-900 mt-2">{highPriorityTickets}</p>
+              <CardContent className="p-4 sm:p-6">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
+                  <div className="flex-1">
+                    <p className="text-xs sm:text-sm font-medium text-gray-600">Closed</p>
+                    <p className="text-xl sm:text-2xl font-bold text-gray-900 mt-1 sm:mt-2">{closedTickets}</p>
                   </div>
-                  <div className="h-12 w-12 bg-red-100 rounded-lg flex items-center justify-center">
-                    <AlertCircle className="h-6 w-6 text-red-600" />
+                  <div className="h-10 w-10 sm:h-12 sm:w-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <AlertCircle className="h-5 w-5 sm:h-6 sm:w-6 text-green-600" />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white border-gray-200">
+              <CardContent className="p-4 sm:p-6">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
+                  <div className="flex-1">
+                    <p className="text-xs sm:text-sm font-medium text-gray-600">High Priority</p>
+                    <p className="text-xl sm:text-2xl font-bold text-gray-900 mt-1 sm:mt-2">{highPriorityTickets}</p>
+                  </div>
+                  <div className="h-10 w-10 sm:h-12 sm:w-12 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <AlertCircle className="h-5 w-5 sm:h-6 sm:w-6 text-red-600" />
                   </div>
                 </div>
               </CardContent>
@@ -183,9 +183,9 @@ const DepartmentPortal = () => {
 
           {/* Add Ticket Button and Form */}
           <div className="flex justify-between items-center">
-            <Button 
+            <Button
               onClick={() => setShowAddForm(!showAddForm)}
-              className="bg-blue-600 hover:bg-blue-700"
+              className="bg-blue-600 hover:bg-blue-700 h-10 text-sm sm:text-base w-full sm:w-auto"
             >
               <Plus className="h-4 w-4 mr-2" />
               {showAddForm ? 'Cancel' : 'Add New Ticket'}
@@ -281,14 +281,14 @@ const DepartmentPortal = () => {
 
           {/* Tickets Table */}
           <Card className="bg-white border-gray-200">
-            <CardHeader className="pb-4">
-              <div className="flex justify-between items-center">
-                <CardTitle className="text-xl font-semibold text-gray-900">
+            <CardHeader className="pb-3 sm:pb-4 px-4 sm:px-6">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0">
+                <CardTitle className="text-lg sm:text-xl font-semibold text-gray-900">
                   {getCategoryDisplayName(user?.category || '')} Tickets
                 </CardTitle>
-                <div className="flex items-center space-x-4">
+                <div className="flex items-center w-full sm:w-auto">
                   <Select value={sortBy} onValueChange={handleSortChange}>
-                    <SelectTrigger className="w-48">
+                    <SelectTrigger className="w-full sm:w-48 h-10">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -299,20 +299,20 @@ const DepartmentPortal = () => {
                 </div>
               </div>
             </CardHeader>
-            <CardContent>
+            <CardContent className="px-4 sm:px-6">
               {/* Search and Filters */}
-              <div className="flex flex-col sm:flex-row gap-4 mb-6">
+              <div className="flex flex-col gap-3 mb-4 sm:mb-6">
                 <div className="relative flex-1">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                   <Input
                     placeholder="Search tickets..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10"
+                    className="pl-10 h-10"
                   />
                 </div>
                 <Select value={statusFilter} onValueChange={setStatusFilter}>
-                  <SelectTrigger className="w-48">
+                  <SelectTrigger className="w-full sm:w-48 h-10">
                     <SelectValue placeholder="Filter by status" />
                   </SelectTrigger>
                   <SelectContent>
@@ -337,7 +337,8 @@ const DepartmentPortal = () => {
                 </div>
               ) : (
                 <div className="rounded-md border border-gray-200 overflow-hidden">
-                  <Table>
+                  <div className="overflow-x-auto">
+                    <Table>
                     <TableHeader className="bg-gray-50">
                       <TableRow>
                         <TableHead className="font-semibold text-gray-900">ID</TableHead>
@@ -389,6 +390,7 @@ const DepartmentPortal = () => {
                       ))}
                     </TableBody>
                   </Table>
+                  </div>
                 </div>
               )}
             </CardContent>

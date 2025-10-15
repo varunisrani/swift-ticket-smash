@@ -55,9 +55,9 @@ const AddTicket = () => {
       backButtonAction={() => window.history.back()}
     >
 
-        <div className="p-6">
+        <div className="p-4 sm:p-6">
           <div className="max-w-4xl mx-auto">
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
               {/* Ticket Information */}
               <Card className="bg-white border-gray-200">
                 <CardHeader>

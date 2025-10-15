@@ -68,22 +68,22 @@ const AllTickets = () => {
 
   return (
     <Layout title="All Tickets" subtitle="View and manage all complaint tickets">
-      <div className="p-6">
-          <div className="max-w-7xl mx-auto space-y-6">
+      <div className="p-4 sm:p-6">
+          <div className="max-w-7xl mx-auto space-y-4 sm:space-y-6">
             {/* Search and Filters */}
             <Card className="bg-white border-gray-200">
-              <CardContent className="p-6">
-                <div className="flex flex-col lg:flex-row gap-4">
+              <CardContent className="p-4 sm:p-6">
+                <div className="flex flex-col gap-3 sm:gap-4">
                   <div className="relative flex-1">
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                     <Input
-                      placeholder="Search tickets by title, description, email, or ID..."
+                      placeholder="Search tickets..."
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      className="pl-10"
+                      className="pl-10 h-10"
                     />
                   </div>
-                  <div className="flex flex-col sm:flex-row gap-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                     <Select value={statusFilter} onValueChange={setStatusFilter}>
                       <SelectTrigger className="w-full sm:w-40">
                         <Filter className="h-4 w-4 mr-2" />
@@ -152,36 +152,36 @@ const AllTickets = () => {
 
             {/* Tickets Table */}
             <Card className="bg-white border-gray-200">
-              <CardHeader className="pb-4">
-                <div className="flex justify-between items-center">
-                  <CardTitle className="text-lg font-semibold text-gray-900">
+              <CardHeader className="pb-3 sm:pb-4 px-4 sm:px-6">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0">
+                  <CardTitle className="text-base sm:text-lg font-semibold text-gray-900">
                     Tickets ({filteredTickets.length})
                   </CardTitle>
-                  <Button asChild>
+                  <Button asChild className="w-full sm:w-auto h-10">
                     <Link to="/add-ticket">
                       <Ticket className="h-4 w-4 mr-2" />
-                      New Ticket
+                      <span className="text-sm">New Ticket</span>
                     </Link>
                   </Button>
                 </div>
               </CardHeader>
-              <CardContent>
+              <CardContent className="px-4 sm:px-6">
                 {loading ? (
                   <div className="text-center py-8">
                     <p className="text-gray-500">Loading tickets...</p>
                   </div>
                 ) : filteredTickets.length === 0 ? (
                   <div className="text-center py-8">
-                    <p className="text-gray-500">
-                      {searchTerm || statusFilter !== 'all' || priorityFilter !== 'all' || categoryFilter !== 'all' 
-                        ? 'No tickets found matching your filters.' 
+                    <p className="text-gray-500 text-sm">
+                      {searchTerm || statusFilter !== 'all' || priorityFilter !== 'all' || categoryFilter !== 'all'
+                        ? 'No tickets found matching your filters.'
                         : 'No tickets available. Create your first ticket!'}
                     </p>
                   </div>
                 ) : (
                   <div className="rounded-md border border-gray-200 overflow-hidden">
                     <div className="overflow-x-auto">
-                      <Table>
+                      <Table className="min-w-full">
                         <TableHeader className="bg-gray-50">
                           <TableRow>
                             <TableHead className="font-semibold text-gray-900 w-[80px]">ID</TableHead>

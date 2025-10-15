@@ -67,39 +67,44 @@ const PortalLayout = ({ children, title, subtitle }: PortalLayoutProps) => {
       {/* Main Content */}
       <div className="flex-1 lg:ml-0 min-h-screen">
         {/* Header */}
-        <header className="bg-white border-b border-gray-200">
-          <div className="px-6 py-4">
-            <div className="flex justify-between items-center">
-              <div className="flex items-center space-x-4">
+        <header className="bg-white border-b border-gray-200 sticky top-0 z-30">
+          <div className="px-4 sm:px-6 py-3 sm:py-4">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0">
+              <div className="flex items-center space-x-2 sm:space-x-4 w-full sm:w-auto">
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="lg:hidden"
+                  className="lg:hidden h-9 w-9 p-0"
                   onClick={() => setSidebarOpen(true)}
                 >
-                  <Menu className="h-4 w-4" />
+                  <Menu className="h-5 w-5" />
                 </Button>
-                <div className="flex items-center space-x-3">
-                  <div>
-                    <h1 className="text-xl font-bold text-gray-900">{title}</h1>
-                    {subtitle && <p className="text-xs text-gray-500">{subtitle}</p>}
+                <div className="flex items-center space-x-2 sm:space-x-3 flex-1 min-w-0">
+                  <div className="min-w-0 flex-1">
+                    <h1 className="text-lg sm:text-xl font-bold text-gray-900 truncate">{title}</h1>
+                    {subtitle && <p className="text-xs text-gray-500 truncate">{subtitle}</p>}
                   </div>
                   {user && (
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${getCategoryColor(user.category)}`}>
+                    <span className={`hidden sm:inline-flex px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap ${getCategoryColor(user.category)}`}>
                       {getCategoryDisplayName(user.category)}
                     </span>
                   )}
                 </div>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-1 sm:space-x-2 w-full sm:w-auto justify-end">
                 <NotificationPanel />
-                <div className="flex items-center space-x-2">
+                <div className="hidden md:flex items-center space-x-2">
                   <User className="h-4 w-4 text-gray-500" />
-                  <span className="text-sm font-medium text-gray-700">{user?.name}</span>
+                  <span className="text-sm font-medium text-gray-700 max-w-[120px] truncate">{user?.name}</span>
                 </div>
-                <Button variant="ghost" size="sm" onClick={handleLogout}>
-                  <LogOut className="h-4 w-4 mr-2" />
-                  Logout
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleLogout}
+                  className="h-9"
+                >
+                  <LogOut className="h-4 w-4 sm:mr-2" />
+                  <span className="hidden sm:inline">Logout</span>
                 </Button>
               </div>
             </div>

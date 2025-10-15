@@ -104,8 +104,8 @@ const UsersPage = () => {
 
   return (
     <Layout title="Users" subtitle="Manage system users and access control">
-      <div className="p-6">
-        <div className="max-w-7xl mx-auto space-y-6">
+      <div className="p-4 sm:p-6">
+        <div className="max-w-7xl mx-auto space-y-4 sm:space-y-6">
           {/* Header with Create Button */}
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-2">
@@ -188,7 +188,8 @@ const UsersPage = () => {
                 </div>
               ) : (
                 <div className="rounded-md border border-gray-200 overflow-hidden">
-                  <Table>
+                  <div className="overflow-x-auto">
+                    <Table className="min-w-full">
                     <TableHeader className="bg-gray-50">
                       <TableRow>
                         <TableHead className="font-semibold text-gray-900">ID</TableHead>
@@ -267,6 +268,7 @@ const UsersPage = () => {
                       ))}
                     </TableBody>
                   </Table>
+                  </div>
                 </div>
               )}
             </CardContent>
