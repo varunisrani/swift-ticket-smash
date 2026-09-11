@@ -1,73 +1,62 @@
-# Welcome to your Lovable project
+# Swift Ticket Smash
 
-## Project info
+Swift Ticket Smash is a role-routed service-ticket dashboard for administrators and operational departments.
 
-**URL**: https://lovable.dev/projects/26df163f-83c8-4f39-8314-0391f113884e
+## Core features
 
-## How can I edit this code?
+- Custom sign-in flow and protected administrator or department routes.
+- Ticket creation, assignment by category, status updates, deletion, and detail views.
+- Department portals for electrical, civil, IT, maintenance, housekeeping, security, clinical, and other teams.
+- Ticket comments and in-app notification records.
+- Administrative ticket, report, and user-management screens.
+- Supabase-backed persistence with a generated TypeScript database model.
 
-There are several ways of editing your application.
+## Technology stack
 
-**Use Lovable**
+- React 18, TypeScript, and Vite 5
+- React Router and TanStack React Query
+- Supabase JavaScript client
+- Tailwind CSS, shadcn/ui (Radix UI), Lucide icons, and Recharts
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/26df163f-83c8-4f39-8314-0391f113884e) and start prompting.
+## Prerequisites
 
-Changes made via Lovable will be committed automatically to this repo.
+- Node.js 20 or newer
+- npm (a `package-lock.json` is included)
+- Access to the configured Supabase project and expected database schema
 
-**Use your preferred IDE**
+## Local setup
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
+git clone https://github.com/varunisrani/swift-ticket-smash.git
+cd swift-ticket-smash
+npm ci
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Other verified scripts are:
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+npm run build
+npm run preview
+npm run lint
+```
 
-**Use GitHub Codespaces**
+## Configuration
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+The current generated Supabase client does not read environment variables; its project URL and publishable client key are embedded in `src/integrations/supabase/client.ts`. No environment variable names are defined by this repository.
 
-## What technologies are used for this project?
+## Project structure
 
-This project is built with:
+```text
+src/pages/                  Login, portals, tickets, reports, and user screens
+src/components/             Layouts, forms, status controls, comments, and notifications
+src/contexts/               Client authentication state
+src/hooks/                  Ticket and notification data access
+src/services/               User and authentication services
+src/integrations/supabase/  Generated database client and types
+supabase/migrations/        Database migration SQL
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Status and limitations
 
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/26df163f-83c8-4f39-8314-0391f113884e) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+The application is tightly coupled to a preconfigured remote Supabase project. Its custom authentication and authorization behavior depends on database records and access policies in that project; a fresh clone does not provide an isolated local backend or seed users.
